@@ -1,0 +1,46 @@
+/* Smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Custom scrollbar for sidebar */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Active menu item styles */
+.router-link-active {
+  @apply bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md;
+}
+
+.router-link-active svg {
+  @apply text-white;
+}
+
+/* Tooltip styles for collapsed mode */
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+  .fixed {
+    transition: transform 0.3s ease-in-out;
+  }
+}

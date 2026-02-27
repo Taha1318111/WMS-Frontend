@@ -1,0 +1,12 @@
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+  .lg\:ml-64, .lg\:ml-20 {
+    margin-left: 0 !important;
+  }
+}

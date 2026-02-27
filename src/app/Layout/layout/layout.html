@@ -1,0 +1,14 @@
+<div class="flex min-h-screen bg-gray-50">
+  <!-- Sidebar with event binding - FIXED: Make sure (collapsedChange) is correct -->
+  <app-sidebar (collapsedChange)="onSidebarToggled($event)"></app-sidebar>
+  
+  <!-- Main Content Area - shifts based on sidebar state -->
+  <div class="flex-1 transition-all duration-300"
+       [class.lg:ml-64]="!isSidebarCollapsed"
+       [class.lg:ml-20]="isSidebarCollapsed">
+    <!-- Router Outlet for Dashboard Content -->
+    <main class="">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

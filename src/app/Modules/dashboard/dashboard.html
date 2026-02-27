@@ -1,0 +1,154 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Total Customers -->
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500">
+      <p class="text-sm text-gray-500 uppercase tracking-wide">Total customers</p>
+      <div class="flex items-center justify-between mt-2">
+        <p class="text-2xl font-bold text-gray-800">567,899</p>
+        <span class="text-green-500 text-sm font-semibold bg-green-100 px-2 py-1 rounded">2.5% ↑</span>
+      </div>
+    </div>
+
+    <!-- Total Revenue -->
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-emerald-500">
+      <p class="text-sm text-gray-500 uppercase tracking-wide">Total revenue</p>
+      <div class="flex items-center justify-between mt-2">
+        <p class="text-2xl font-bold text-gray-800">$3,465 M</p>
+        <span class="text-green-500 text-sm font-semibold bg-green-100 px-2 py-1 rounded">0.5% ↑</span>
+      </div>
+    </div>
+
+    <!-- Total Orders -->
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-teal-500">
+      <p class="text-sm text-gray-500 uppercase tracking-wide">Total orders</p>
+      <div class="flex items-center justify-between mt-2">
+        <p class="text-2xl font-bold text-gray-800">1,136 M</p>
+        <span class="text-green-500 text-sm font-semibold bg-green-100 px-2 py-1 rounded">0.2% ↑</span>
+      </div>
+    </div>
+
+    <!-- Total Returns -->
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500">
+      <p class="text-sm text-gray-500 uppercase tracking-wide">Total returns</p>
+      <div class="flex items-center justify-between mt-2">
+        <p class="text-2xl font-bold text-gray-800">1,789</p>
+        <span class="text-yellow-500 text-sm font-semibold bg-yellow-100 px-2 py-1 rounded">0.12% ↑</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Data Button -->
+  <div class="mb-6">
+    <button class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 shadow-md">
+      + Add data
+    </button>
+  </div>
+
+  <!-- Product Sales Chart -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Product sales</h2>
+      <div class="h-80">
+        <canvas id="productSalesChart"></canvas>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <p class="text-sm text-gray-500">Gross margin</p>
+          <p class="text-2xl font-bold text-gray-800">$52,187</p>
+          <span class="text-green-500 text-sm font-semibold">2.5% ↑</span>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <p class="text-sm text-gray-500">Revenue</p>
+          <p class="text-2xl font-bold text-gray-800">$82,187</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales by Product Category -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Sales by product category</h2>
+      <div class="h-80">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales by Countries -->
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Sales by countries</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Countries List -->
+      <div>
+        <div class="space-y-3">
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Poland</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-green-500 rounded-full" style="width: 19%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">19%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Austria</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-emerald-500 rounded-full" style="width: 15%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">15%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Spain</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-teal-500 rounded-full" style="width: 13%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">13%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Romania</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-green-400 rounded-full" style="width: 12%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">12%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">France</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-emerald-400 rounded-full" style="width: 11%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">11%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Italy</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-teal-400 rounded-full" style="width: 11%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">11%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Germany</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-green-300 rounded-full" style="width: 10%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">10%</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-24 text-gray-600">Ukraine</span>
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-emerald-300 rounded-full" style="width: 9%"></div>
+            </div>
+            <span class="w-12 text-right font-semibold text-gray-700">9%</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Countries Chart -->
+      <div class="h-64">
+        <canvas id="countriesChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
