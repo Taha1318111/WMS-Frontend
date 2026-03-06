@@ -6,16 +6,14 @@
 </button>
 
 <!-- Also check your mobile overlay -->
-<div *ngIf="!isCollapsed" 
-     class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-     (click)="closeSidebar()"> <!-- This calls closeSidebar() -->
+<div *ngIf="!isCollapsed" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden" (click)="closeSidebar()">
+  <!-- This calls closeSidebar() -->
 </div>
 
 <!-- Sidebar -->
-<div class="fixed inset-y-0 left-0 bg-white shadow-xl transition-all duration-300 z-40"
-     [class.w-20]="isCollapsed"
-     [class.w-64]="!isCollapsed">
-  
+<div class="fixed inset-y-0 left-0 bg-white shadow-xl transition-all duration-300 z-40" [class.w-20]="isCollapsed"
+  [class.w-64]="!isCollapsed">
+
   <!-- Logo Area -->
   <div class="flex items-center justify-between p-4 border-b border-gray-200">
     <div class="flex items-center space-x-2">
@@ -34,100 +32,106 @@
   <!-- Menu Items -->
   <nav class="p-4 space-y-2">
     <!-- Dashboard -->
-    <a routerLink="/layout/Dashboard" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/dashboard')" [class.text-gray-500]="!isActive('/layout/dashboard')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    <a routerLink="/layout/dashboard"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/dashboard')"
+        [class.text-gray-500]="!isActive('/layout/dashboard')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Dashboard</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Dashboard</span>
+      <span *ngIf="isCollapsed"
+        class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Dashboard</span>
     </a>
 
     <!-- Products -->
-    <a routerLink="/layout/Products" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/marketplace')" [class.text-gray-500]="!isActive('/layout/marketplace')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+    <a routerLink="products"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Products</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Marketplace</span>
     </a>
 
     <!-- Orders -->
-    <a routerLink="/layout/orders" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/orders')" [class.text-gray-500]="!isActive('/layout/orders')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+    <a routerLink="orders"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/orders')"
+        [class.text-gray-500]="!isActive('/layout/orders')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Orders</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Orders</span>
-      
+      <span *ngIf="isCollapsed"
+        class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Orders</span>
+
       <!-- Notification Badge (example) -->
       <span *ngIf="!isCollapsed" class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">12</span>
     </a>
 
     <!-- Customers -->
-    <a routerLink="/layout/customers" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/customers')" [class.text-gray-500]="!isActive('/layout/customers')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    <a routerLink="/layout/customers"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/customers')"
+        [class.text-gray-500]="!isActive('/layout/customers')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Customers</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Customers</span>
+      <span *ngIf="isCollapsed"
+        class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Customers</span>
     </a>
 
-    <!-- Products -->
-    <a routerLink="/layout/products" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/products')" [class.text-gray-500]="!isActive('/layout/products')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-      </svg>
-      <span *ngIf="!isCollapsed" class="font-medium">Products</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Products</span>
-    </a>
+    
 
     <!-- Analytics -->
-    <a routerLink="/layout/analytics" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/analytics')" [class.text-gray-500]="!isActive('/layout/analytics')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    <a routerLink="/layout/analytics"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/analytics')"
+        [class.text-gray-500]="!isActive('/layout/analytics')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Analytics</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Analytics</span>
+      <span *ngIf="isCollapsed"
+        class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Analytics</span>
     </a>
 
     <!-- Settings (separated with a divider) -->
     <div class="border-t border-gray-200 my-4"></div>
 
-    <a routerLink="/layout/settings" 
-       routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-       class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
-       [class.justify-center]="isCollapsed">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/settings')" [class.text-gray-500]="!isActive('/layout/settings')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <a routerLink="/layout/settings"
+      routerLinkActive="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
+      class="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 transition-colors group"
+      [class.justify-center]="isCollapsed">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" [class.text-white]="isActive('/layout/settings')"
+        [class.text-gray-500]="!isActive('/layout/settings')" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
       <span *ngIf="!isCollapsed" class="font-medium">Settings</span>
-      <span *ngIf="isCollapsed" class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Settings</span>
+      <span *ngIf="isCollapsed"
+        class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Settings</span>
     </a>
   </nav>
 
   <!-- User Profile Section at Bottom -->
   <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
     <div class="flex items-center space-x-3" [class.justify-center]="isCollapsed">
-      <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
+      <div
+        class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
         JD
       </div>
       <div *ngIf="!isCollapsed">
@@ -136,7 +140,8 @@
       </div>
       <button *ngIf="!isCollapsed" class="ml-auto text-gray-400 hover:text-green-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
       </button>
     </div>
@@ -144,7 +149,5 @@
 </div>
 
 <!-- Overlay for mobile when sidebar is open -->
-<div *ngIf="!isCollapsed" 
-     class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-     (click)="isCollapsed = true">
+<div *ngIf="!isCollapsed" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden" (click)="isCollapsed = true">
 </div>

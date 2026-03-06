@@ -1,64 +1,172 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
 
+  <!-- Header Section with Stats Cards -->
+  <div class="mb-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+          <span class="bg-blue-600 p-2 rounded-lg shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </span>
+          Product Management
+        </h1>
+        <p class="text-gray-500 mt-1 ml-12">Manage your product inventory and pricing</p>
+      </div>
 
-<div class="p-6 bg-gray-50 min-h-screen">
-  <!-- Header -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Product Management</h1>
-    
-    <div class="flex flex-col sm:flex-row gap-3">
-      <!-- Search by ID -->
-      <div class="flex">
-        <input 
-          type="text" 
-          [(ngModel)]="selectedProductId"
-          placeholder="Enter Product ID"
-          class="px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        >
-        <button 
-          (click)="findProductById()"
-          class="bg-green-600 text-white px-4 py-2 rounded-r-lg hover:bg-green-700"
-        >
-          Find
+      <div class="flex flex-col sm:flex-row gap-3 mt-4 md:mt-0">
+        <!-- Filter Button -->
+        <button
+          class="bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-50 shadow-sm flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filters
+        </button>
+
+        <!-- Export Button -->
+        <button
+          class="bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-50 shadow-sm flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Export
+        </button>
+
+        <!-- Add Product Button (Enhanced) -->
+        <button routerLink="/layout/Createproduct"
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-xl hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transition-all duration-200 transform hover:scale-105">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" routerLink="/layout/Createproduct">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          <a routerLink="/layout/Createproduct" class="ml-2">Add Product</a>
         </button>
       </div>
-      
-      <!-- Add Product Button -->
-      <button 
-        (click)="openAddModal()"
-        class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 shadow-md flex items-center justify-center"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-        </svg>
-        Add Product
-      </button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+      <div
+        class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-l-4 border-blue-500">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Total Products</p>
+            <p class="text-2xl font-bold text-gray-800">{{ products.length }}</p>
+          </div>
+          <div class="bg-blue-100 p-3 rounded-lg">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+        </div>
+        <div class="mt-2 text-sm text-green-600 flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+          <span>+12% from last month</span>
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-l-4 border-green-500">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Total Value</p>
+            <!-- <p class="text-2xl font-bold text-gray-800">${{ calculateTotalValue() | number:'1.0-0' }}</p> -->
+          </div>
+          <div class="bg-green-100 p-3 rounded-lg">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+        <!-- <div class="mt-2 text-sm text-gray-500">Average: ${{ calculateAveragePrice() | number:'1.2-2' }}</div> -->
+      </div>
+
+      <div
+        class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-l-4 border-purple-500">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Categories</p>
+            <!-- <p class="text-2xl font-bold text-gray-800">{{ getUniqueCategories() }}</p> -->
+          </div>
+          <div class="bg-purple-100 p-3 rounded-lg">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l5 5a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-5-5A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-l-4 border-yellow-500">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Low Stock</p>
+            <!-- <p class="text-2xl font-bold text-gray-800">{{ getLowStockCount() }}</p> -->
+          </div>
+          <div class="bg-yellow-100 p-3 rounded-lg">
+            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Search Bar -->
-  <div class="mb-6">
-    <div class="relative">
-      <input 
-        type="text" 
-        [(ngModel)]="searchTerm"
-        placeholder="Search products by name, ID or category..."
-        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-      >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  <!-- Search and Filter Bar -->
+  <div class="mb-6 flex flex-col sm:flex-row gap-4">
+    <div class="flex-1 relative">
+      <svg class="w-5 h-5 text-gray-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
+      <input type="text" placeholder="Search products by name, ID, or category..."
+        class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none shadow-sm hover:shadow-md">
+    </div>
+    <div class="flex gap-3">
+      <select
+        class="px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none bg-white shadow-sm hover:shadow-md">
+        <option>All Categories</option>
+        <option>Electronics</option>
+        <option>Clothing</option>
+        <option>Food & Beverages</option>
+      </select>
+      <select
+        class="px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none bg-white shadow-sm hover:shadow-md">
+        <option>Sort by: Latest</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Name: A to Z</option>
+      </select>
     </div>
   </div>
 
-  <!-- Products Table -->
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <!-- Products Table (Enhanced) -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
     <div class="overflow-x-auto">
+
       <table class="w-full">
         <thead class="bg-gray-50 border-b border-gray-200">
           <tr>
+            <th class="px-6 py-4 text-left">
+              <div class="flex items-center gap-2 text-sm font-semibold text-gray-600">
+                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  [checked]="isAllSelected()" (change)="toggleAll($event)">
+              </div>
+            </th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Image</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ID</th>
-            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Name</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Product Details</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Category</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Price</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Stock</th>
@@ -66,225 +174,350 @@
             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Actions</th>
           </tr>
         </thead>
+
         <tbody class="divide-y divide-gray-200">
-          <tr *ngFor="let product of filteredProducts" class="hover:bg-gray-50 transition-colors">
-            <td class="px-6 py-4">
-              <img [src]="product.image" [alt]="product.name" class="w-12 h-12 rounded-lg object-cover">
+          <!-- Loading State -->
+          @if (loading) {
+          <tr>
+            <td colspan="9" class="px-6 py-12 text-center">
+              <div class="flex justify-center items-center">
+                <svg class="animate-spin w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+                <span class="ml-3 text-gray-600">Loading products...</span>
+              </div>
             </td>
-            <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ product.id }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600">{{ product.name }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600">{{ product.category }}</td>
-            <td class="px-6 py-4 text-sm text-gray-900 font-medium">${{ product.price }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600">{{ product.stock }}</td>
+          </tr>
+          }
+
+          <!-- Product Rows -->
+          @for (product of products; track product.productId) {
+          <tr class="hover:bg-gray-50 transition-colors group">
+            <!-- Checkbox -->
             <td class="px-6 py-4">
-              <span [class]="'px-2 py-1 text-xs font-medium rounded-full ' + getStatusBadge(product.status)">
-                {{ product.status }}
+              <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                [checked]="isSelected(product.productId)" (change)="toggleSelection(product.productId)">
+            </td>
+
+            <!-- Image Column -->
+            <!-- <td class="px-6 py-4">
+              <div class="relative w-12 h-12">
+                <div>
+
+                </div>
+                @if (imageLoadingStates[product.productId]) {
+                <div class="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <svg class="animate-spin w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                  </svg>
+                </div>
+                }
+
+                @else if (imageErrorStates[product.productId] || !product.imageUrl) {
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                  <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                }
+                @else {
+                <img [src]="imageBaseUrl + product?.imageUrl" [alt]="product.productName"
+                  class="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                  (load)="onImageLoad(product.productId)" (error)="onImageError(product.productId)">
+                }
+
+              </div>
+            </td> -->
+            <!-- ID -->
+             <!-- In your table, image column -->
+<!-- products.html mein pipe ka use aise karo -->
+<td class="px-6 py-4">
+  <div class="relative w-12 h-12">
+    <!-- Loading State -->
+    @if (imageLoadingStates[product.productId] && !loadedImages.has(product.productId)) {
+      <div class="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center">
+        <svg class="animate-spin w-5 h-5 text-blue-500" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </div>
+    }
+
+    <!-- Image - Only show if not loaded and no error -->
+    @if (hasValidImage(product) && !imageErrorStates[product.productId] && !loadedImages.has(product.productId)) {
+      <img 
+        [src]="getSafeImageUrl(product)"
+        [alt]="product.productName"
+        class="w-12 h-12 object-cover rounded-lg border border-gray-200"
+        loading="lazy"
+        (load)="onImageLoad(product.productId)"
+        (error)="onImageError(product.productId, product)"
+      >
+    }
+
+    <!-- Show image after load (using cached) -->
+    @if (hasValidImage(product) && loadedImages.has(product.productId) && !imageErrorStates[product.productId]) {
+      <img 
+        [src]="getSafeImageUrl(product)"
+        [alt]="product.productName"
+        class="w-12 h-12 object-cover rounded-lg border border-gray-200"
+        loading="lazy"
+      >
+    }
+
+    <!-- No Image / Error State -->
+    @if (!hasValidImage(product) || imageErrorStates[product.productId]) {
+      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+    }
+  </div>
+</td>
+            <td class="px-6 py-4 text-sm font-mono text-gray-600">
+              #{{ product.productId }}
+            </td>
+
+            <!-- Product Details -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-medium text-gray-900">{{ product.productName || 'N/A' }}</div>
+                  <div class="text-xs text-gray-500">SKU: PRD-{{ product.productId }}</div>
+                </div>
+              </div>
+            </td>
+
+            <!-- Category -->
+            <td class="px-6 py-4">
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+                {{ product.categoryName || 'Uncategorized' }}
               </span>
             </td>
+
+            <!-- Price -->
             <td class="px-6 py-4">
-              <div class="flex items-center space-x-2">
-                <!-- View Button -->
-                <button (click)="openViewModal(product)" class="text-blue-600 hover:text-blue-800 p-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              <div class="font-bold text-gray-900">
+                ${{ (product.fixedAmount || 0) | number:'1.2-2' }}
+              </div>
+              @if (product.profitMargin) {
+              <div class="text-xs text-green-600">+{{ product.profitMargin }}% profit</div>
+              }
+            </td>
+
+            <!-- Stock -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-gray-200 rounded-full h-2">
+                  <div class="bg-green-500 h-2 rounded-full transition-all duration-300"
+                   >
+                  </div>
+                </div>
+                <span class="text-sm text-gray-600">{{ product.stock || 0 }} units</span>
+              </div>
+            </td>
+
+            <!-- Status -->
+            <td class="px-6 py-4">
+              @if (product.status === 'ACTIVE') {
+              <span
+                class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium flex items-center gap-1 w-fit">
+                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                Active
+              </span>
+              } @else if (product.status === 'INACTIVE') {
+              <span
+                class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium flex items-center gap-1 w-fit">
+                <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+                Inactive
+              </span>
+              } @else {
+              <span
+                class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium flex items-center gap-1 w-fit">
+                <span class="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
+                Draft
+              </span>
+              }
+            </td>
+
+            <!-- Actions -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button (click)="editProduct(product.productId)"
+                  class="p-2 hover:bg-blue-50 rounded-lg text-blue-600 transition-colors" title="Edit">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
                 </button>
-                
-                <!-- Edit Button -->
-                <button (click)="openEditModal(product)" class="text-green-600 hover:text-green-800 p-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+
+                <button (click)="deleteProduct(product.productId)"
+                  class="p-2 hover:bg-red-50 rounded-lg text-red-600 transition-colors" title="Delete">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
-                
-                <!-- Delete Button -->
-                <button (click)="openDeleteModal(product)" class="text-red-600 hover:text-red-800 p-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+
+                <button (click)="viewProductDetails(product.productId)"
+                  class="p-2 hover:bg-gray-50 rounded-lg text-gray-600 transition-colors" title="View Details">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </button>
               </div>
             </td>
           </tr>
-          <tr *ngIf="filteredProducts.length === 0">
-            <td colspan="8" class="px-6 py-8 text-center text-gray-500">
-              No products found
+          }
+
+          <!-- No Data Row -->
+          @if (!loading && products.length === 0) {
+          <tr>
+            <td colspan="9" class="px-6 py-16 text-center">
+              <div class="flex flex-col items-center justify-center">
+                <div class="bg-gray-100 p-4 rounded-full mb-4">
+                  <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+                <p class="text-gray-500 mb-4">Get started by adding your first product</p>
+                <button routerLink="/layout/Createproduct"
+                  class="bg-blue-600 text-white px-6 py-2.5 rounded-xl hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add Product
+                </button>
+              </div>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
-  </div>
-  
 
-  <!-- Add/Edit Product Modal -->
-  <div *ngIf="showProductModal" class="fixed inset-0 z-50 overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen px-4">
-      <div class="fixed inset-0 bg-black opacity-50" (click)="closeModals()"></div>
-      
-      <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">
-          {{ modalMode === 'add' ? 'Add New Product' : 'Edit Product' }}
-        </h2>
-        
-        <form [formGroup]="modalMode === 'add' ? productForm : editProductForm" (ngSubmit)="modalMode === 'add' ? addProduct() : updateProduct()">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Product Name -->
-            <div class="col-span-2">
-              <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-              <input type="text" formControlName="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-              <div *ngIf="(modalMode === 'add' ? productForm.get('name')?.invalid && productForm.get('name')?.touched : editProductForm.get('name')?.invalid && editProductForm.get('name')?.touched)" class="text-red-500 text-sm mt-1">
-                Product name is required
-              </div>
-            </div>
-            
-            <!-- Category -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select formControlName="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-                <option value="">Select Category</option>
-                <option value="Living room">Living room</option>
-                <option value="Bedroom">Bedroom</option>
-                <option value="Dining room">Dining room</option>
-                <option value="Office">Office</option>
-                <option value="Kitchen">Kitchen</option>
-                <option value="Bathroom">Bathroom</option>
-                <option value="Kids">Kids</option>
-                <option value="Outdoor">Outdoor</option>
-                <option value="Decor">Decor</option>
-                <option value="Lighting">Lighting</option>
-              </select>
-            </div>
-            
-            <!-- Price -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-              <input type="number" step="0.01" formControlName="price" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-            </div>
-            
-            <!-- Stock -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
-              <input type="number" formControlName="stock" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-            </div>
-            
-            <!-- Image URL -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-              <input type="text" formControlName="image" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-            </div>
-            
-            <!-- Description -->
-            <div class="col-span-2">
-              <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-              <textarea formControlName="description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"></textarea>
-            </div>
-          </div>
-          
-          <!-- Form Actions -->
-          <div class="flex justify-end space-x-3 mt-6">
-            <button type="button" (click)="closeModals()" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-              Cancel
+    <!-- Table Footer with Pagination -->
+    <div class="bg-white px-6 py-4 border-t border-gray-200">
+  <!-- Results Info -->
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="text-sm text-gray-600">
+      Showing 
+      <span class="font-medium">{{ getStartIndex() }}</span> 
+      to 
+      <span class="font-medium">{{ getEndIndex() }}</span> 
+      of 
+      <span class="font-medium">{{ totalPages }}</span> 
+      results
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="flex items-center gap-2">
+      <!-- Previous Button -->
+      <button 
+        (click)="changePage(currentPage - 1)" 
+        [disabled]="currentPage === 1 || loading"
+        class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm font-medium
+               hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed
+               transition-colors duration-200 flex items-center gap-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Previous
+      </button>
+
+      <!-- Page Numbers -->
+      @if (totalPages > 0) {
+        <div class="flex items-center gap-1">
+          <!-- First page indicator if needed -->
+          @if (currentPage > 3 && totalPages > 5) {
+            <button 
+              (click)="changePage(1)"
+              class="w-8 h-8 rounded-lg text-sm font-medium hover:bg-gray-100">
+              1
             </button>
-            <button type="submit" class="px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700">
-              {{ modalMode === 'add' ? 'Add Product' : 'Update Product' }}
+            @if (currentPage > 4) {
+              <span class="px-1 text-gray-400">...</span>
+            }
+          }
+
+          <!-- Dynamic page numbers -->
+          @for (page of getPageNumbers(); track page) {
+            <button 
+              (click)="changePage(page)"
+              [disabled]="loading"
+              class="w-8 h-8 rounded-lg text-sm font-medium transition-all duration-200
+                     {{ currentPage === page 
+                        ? 'bg-blue-600 text-white shadow-md' 
+                        : 'hover:bg-gray-100 text-gray-700' }}">
+              {{ page }}
             </button>
-          </div>
-        </form>
-      </div>
+          }
+
+          <!-- Last page indicator if needed -->
+          @if (currentPage < totalPages - 2 && totalPages > 5) {
+            @if (currentPage < totalPages - 3) {
+              <span class="px-1 text-gray-400">...</span>
+            }
+            <button 
+              (click)="changePage(totalPages)"
+              class="w-8 h-8 rounded-lg text-sm font-medium hover:bg-gray-100">
+              {{ totalPages }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Next Button -->
+      <button 
+        (click)="changePage(currentPage + 1)" 
+        [disabled]="currentPage === totalPages || totalPages === 0 || loading"
+        class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm font-medium
+               hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed
+               transition-colors duration-200 flex items-center gap-1">
+        Next
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- View Product Modal (Find by ID) -->
-  <div *ngIf="showViewModal && selectedProduct" class="fixed inset-0 z-50 overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen px-4">
-      <div class="fixed inset-0 bg-black opacity-50" (click)="closeModals()"></div>
-      
-      <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Product Details</h2>
-        
-        <div class="flex flex-col md:flex-row gap-6">
-          <!-- Product Image -->
-          <div class="md:w-1/3">
-            <img [src]="selectedProduct.image" [alt]="selectedProduct.name" class="w-full rounded-lg shadow-md">
-          </div>
-          
-          <!-- Product Info -->
-          <div class="md:w-2/3">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <p class="text-sm text-gray-500">Product ID</p>
-                <p class="font-medium text-gray-900">{{ selectedProduct.id }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Status</p>
-                <span [class]="'px-2 py-1 text-xs font-medium rounded-full inline-block ' + getStatusBadge(selectedProduct.status)">
-                  {{ selectedProduct.status }}
-                </span>
-              </div>
-              <div class="col-span-2">
-                <p class="text-sm text-gray-500">Product Name</p>
-                <p class="font-medium text-gray-900 text-lg">{{ selectedProduct.name }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Category</p>
-                <p class="font-medium text-gray-900">{{ selectedProduct.category }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Price</p>
-                <p class="font-medium text-gray-900 text-lg text-green-600">${{ selectedProduct.price }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Stock</p>
-                <p class="font-medium text-gray-900">{{ selectedProduct.stock }} units</p>
-              </div>
-              <div class="col-span-2">
-                <p class="text-sm text-gray-500">Description</p>
-                <p class="text-gray-700">{{ selectedProduct.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- View Modal Actions -->
-        <div class="flex justify-end mt-6">
-          <button (click)="closeModals()" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
-            Close
-          </button>
-        </div>
+  <!-- Loading Indicator -->
+  @if (loading) {
+    <div class="mt-4 flex justify-center">
+      <div class="flex items-center gap-2 text-sm text-gray-500">
+        <svg class="animate-spin w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Loading products...</span>
       </div>
     </div>
+  }
+</div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
-  <div *ngIf="showDeleteModal && selectedProduct" class="fixed inset-0 z-50 overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen px-4">
-      <div class="fixed inset-0 bg-black opacity-50" (click)="closeModals()"></div>
-      
-      <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-        <div class="text-center">
-          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          
-          <h3 class="text-lg font-medium text-gray-900 mb-2">Delete Product</h3>
-          <p class="text-sm text-gray-500 mb-4">
-            Are you sure you want to delete "{{ selectedProduct.name }}"? This action cannot be undone.
-          </p>
-          
-          <div class="flex justify-center space-x-3">
-            <button (click)="closeModals()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-              Cancel
-            </button>
-            <button (click)="deleteProduct()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
