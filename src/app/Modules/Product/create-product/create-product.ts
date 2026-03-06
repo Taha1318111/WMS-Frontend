@@ -22,7 +22,7 @@ export class CreateProduct {
   currentDate: Date = new Date();
   
   //Add these properties
-  isSubmitting = false;
+isSubmitting: boolean = false;
   selectedFile!: File;
   imagePreviews: string[] = [];
   isUploading = false;
