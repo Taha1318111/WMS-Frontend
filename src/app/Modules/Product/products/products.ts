@@ -271,7 +271,7 @@ getPageNumbers(): number[] {
 
   // Action methods
   editProduct(productId: string) {
-    this.router.navigate(['/layout/edit-product', productId]);
+    this.router.navigate(['edit-product', productId]);
   }
 
   deleteProduct(productId: string) {

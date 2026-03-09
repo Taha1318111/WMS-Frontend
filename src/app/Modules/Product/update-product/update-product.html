@@ -1,0 +1,642 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 p-6">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- Header with Blue Theme -->
+    <div class="mb-6">
+      <div class="flex items-center gap-2 text-sm text-blue-600 mb-2">
+        <a routerLink="/layout/products" class="hover:underline">Products</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+        <span class="text-gray-600">Edit Product</span>
+        <span class="text-blue-600 font-mono">#{{ productId }}</span>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+            Edit Product
+          </h1>
+          <p class="text-gray-500 mt-1">Update product information</p>
+        </div>
+        
+        <!-- Status Badge -->
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium flex items-center gap-1">
+            <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+            Edit Mode
+          </span>
+          @if (hasChanges()) {
+            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">
+              Unsaved Changes
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <!-- @if (loading) {
+      <div class="bg-white rounded-xl shadow-lg p-12 text-center">
+        <svg class="animate-spin w-12 h-12 text-blue-600 mx-auto mb-4" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <p class="text-gray-600">Loading product details...</p>
+      </div>
+    } -->
+
+    <!-- Edit Form -->
+  
+      <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        
+        <!-- Progress Bar -->
+        <div class="bg-gradient-to-r from-blue-50 to-white px-6 py-4 border-b border-gray-200">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
+                {{ currentStep }}
+              </div>
+              <div>
+                <h2 class="font-semibold text-gray-800">{{ getStepName() }}</h2>
+                <p class="text-xs text-gray-500">Step {{ currentStep }} of {{ totalSteps }}</p>
+              </div>
+            </div>
+            
+            <!-- Step Indicators -->
+            <div class="hidden md:flex items-center gap-2">
+              @for (step of [1,2,3,4,5,6]; track step) {
+                <div class="flex items-center">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300
+                    {{ step < currentStep ? 'bg-blue-500 text-white' : 
+                       step === currentStep ? 'bg-blue-100 text-blue-600 border-2 border-blue-500' : 
+                       'bg-gray-100 text-gray-400' }}">
+                    {{ step }}
+                  </div>
+                  @if (step < 6) {
+                    <div class="w-12 h-1 mx-1 rounded {{ step < currentStep ? 'bg-blue-500' : 'bg-gray-200' }}"></div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          
+          <div class="w-full bg-gray-100 rounded-full h-2">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
+                 [style.width.%]="(currentStep / totalSteps * 100)"></div>
+          </div>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-6">
+          <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Step 1: Primary Identifiers -->
+            @if (currentStep === 1) {
+              <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <!-- Product ID (Read-only) -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                      Product ID <span class="text-blue-600">(cannot be changed)</span>
+                    </label>
+                    <div class="relative">
+                      <input type="text" formControlName="productId"
+                             class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-500 cursor-not-allowed"
+                             readonly>
+                      <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Product Type -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Product Type</label>
+                    <select formControlName="productTypeId"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">Select Type</option>
+                      <option value="FINISHED_GOOD">Finished Good</option>
+                      <option value="RAW_MATERIAL">Raw Material</option>
+                      <option value="SERVICE">Service</option>
+                      <option value="DIGITAL_GOOD">Digital Good</option>
+                    </select>
+                  </div>
+
+                  <!-- Facility ID -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Facility ID</label>
+                    <input type="text" formControlName="facilityId"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Enter facility ID">
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 2: Names & Descriptions -->
+            @if (currentStep === 2) {
+              <div class="space-y-4">
+                <div class="grid grid-cols-1 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                    <input type="text" formControlName="productName"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Enter product name">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Internal Name</label>
+                    <input type="text" formControlName="internalName"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Brand Name</label>
+                    <input type="text" formControlName="brandName"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea formControlName="description" rows="2"
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Long Description</label>
+                    <textarea formControlName="longDescription" rows="3"
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Comments</label>
+                    <textarea formControlName="comments" rows="2"
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 3: Dates & Status -->
+            @if (currentStep === 3) {
+              <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Introduction Date</label>
+                    <input type="date" formControlName="introductionDate"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Release Date</label>
+                    <input type="date" formControlName="releaseDate"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Support Discontinuation Date</label>
+                    <input type="date" formControlName="supportDiscontinuationDate"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Sales Discontinuation Date</label>
+                    <input type="date" formControlName="salesDiscontinuationDate"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Sales Disc When Not Avail</label>
+                    <select formControlName="salesDiscWhenNotAvail"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">Select</option>
+                      @for (opt of yesNoOptions; track opt) {
+                        <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Is Virtual</label>
+                    <select formControlName="isVirtual"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">Select</option>
+                      @for (opt of yesNoOptions; track opt) {
+                        <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Is Variant</label>
+                    <select formControlName="isVariant"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">Select</option>
+                      @for (opt of yesNoOptions; track opt) {
+                        <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 4: Images -->
+            @if (currentStep === 4) {
+              <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
+                
+                <!-- Current Image -->
+                @if (currentImageUrl && !selectedFile) {
+                  <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2">Current Image:</p>
+                    <div class="relative w-32 h-32">
+                      <img [src]="currentImageUrl" class="w-full h-full object-cover rounded-lg border-2 border-blue-200">
+                      <button type="button" (click)="removeImage()"
+                              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                }
+
+                <!-- Upload New Image -->
+                <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors cursor-pointer"
+                     (click)="fileInput.click()">
+                  <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" class="hidden">
+                  
+                  <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-gray-700">Click to upload new image</p>
+                  <p class="text-sm text-gray-500 mt-1">PNG, JPG up to 5MB</p>
+                </div>
+
+                <!-- New Image Preview -->
+                @if (imagePreviews.length > 0 && selectedFile) {
+                  <div class="mt-4">
+                    <p class="text-sm text-gray-600 mb-2">New Image:</p>
+                    <div class="relative w-32 h-32">
+                      <img [src]="imagePreviews[0]" class="w-full h-full object-cover rounded-lg border-2 border-blue-500">
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Step 5: Inventory & Shipping -->
+            @if (currentStep === 5) {
+              <div class="space-y-6">
+                <!-- Inventory Card -->
+                <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                  <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                    Inventory Details
+                  </h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Inventory Message</label>
+                      <input type="text" formControlName="inventoryMessage"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Require Inventory</label>
+                      <select formControlName="requireInventory"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (opt of yesNoOptions; track opt) {
+                          <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Quantity UOM</label>
+                      <select formControlName="quantityUomId"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (uom of uomOptions; track uom) {
+                          <option [value]="uom">{{uom}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Quantity Included</label>
+                      <input type="number" formControlName="quantityIncluded"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Pieces Included</label>
+                      <input type="number" formControlName="piecesIncluded"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Weight Card -->
+                <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                  <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                    </svg>
+                    Weight Information
+                  </h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Weight UOM</label>
+                      <select formControlName="weightUomId"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (uom of uomOptions; track uom) {
+                          <option [value]="uom">{{uom}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Product Weight</label>
+                      <input type="number" step="0.01" formControlName="productWeight"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Weight</label>
+                      <input type="number" step="0.01" formControlName="shippingWeight"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dimensions Card -->
+                <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                  <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                    </svg>
+                    Dimensions
+                  </h3>
+                  
+                  <!-- Height -->
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Height UOM</label>
+                      <select formControlName="heightUomId"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (uom of uomOptions; track uom) {
+                          <option [value]="uom">{{uom}}</option>
+                        }
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Product Height</label>
+                      <input type="number" step="0.01" formControlName="productHeight"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Height</label>
+                      <input type="number" step="0.01" formControlName="shippingHeight"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                  
+                  <!-- Width -->
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Width UOM</label>
+                      <select formControlName="widthUomId"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (uom of uomOptions; track uom) {
+                          <option [value]="uom">{{uom}}</option>
+                        }
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Product Width</label>
+                      <input type="number" step="0.01" formControlName="productWidth"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Width</label>
+                      <input type="number" step="0.01" formControlName="shippingWidth"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                  
+                  <!-- Depth -->
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Depth UOM</label>
+                      <select formControlName="depthUomId"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (uom of uomOptions; track uom) {
+                          <option [value]="uom">{{uom}}</option>
+                        }
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Product Depth</label>
+                      <input type="number" step="0.01" formControlName="productDepth"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Depth</label>
+                      <input type="number" step="0.01" formControlName="shippingDepth"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 6: Pricing & Metadata -->
+            @if (currentStep === 6) {
+              <div class="space-y-6">
+                <!-- Pricing Card -->
+                <div class="bg-gradient-to-r from-blue-50 to-white rounded-xl p-6 border border-blue-100">
+                  <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Pricing Information
+                  </h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Price Detail Text</label>
+                      <input type="text" formControlName="priceDetailText"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Fixed Amount ($)</label>
+                      <input type="number" step="0.01" formControlName="fixedAmount"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Taxable</label>
+                      <select formControlName="taxable"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (opt of yesNoOptions; track opt) {
+                          <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Returnable</label>
+                      <select formControlName="returnable"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (opt of yesNoOptions; track opt) {
+                          <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Charge Shipping</label>
+                      <select formControlName="chargeShipping"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select</option>
+                        @for (opt of yesNoOptions; track opt) {
+                          <option [value]="opt">{{opt === 'Y' ? 'Yes' : 'No'}}</option>
+                        }
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Category ID</label>
+                      <input type="text" formControlName="categoryId"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Metadata Card -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                  <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                    </svg>
+                    Metadata
+                  </h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Created By</label>
+                      <input type="text" formControlName="createdByUserIdLogin"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Last Modified By</label>
+                      <input type="text" formControlName="lastModifiedByUserIdLogin"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Lot ID Filled In</label>
+                      <input type="text" formControlName="lotIdFilledIn"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Form Actions -->
+            <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+              <button type="button" (click)="prevStep()" [disabled]="currentStep === 1"
+                      class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 
+                             transition-all duration-200 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Previous
+              </button>
+
+              <div class="flex items-center gap-3">
+                <button type="button" (click)="onCancel()"
+                        class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200">
+                  Cancel
+                </button>
+                
+                <button type="button" (click)="resetForm()"
+                        class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200">
+                  Reset
+                </button>
+
+                @if (currentStep < totalSteps) {
+                  <button type="button" (click)="nextStep()"
+                          class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg 
+                                 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg 
+                                 transition-all duration-200 flex items-center gap-2">
+                    Next
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </button>
+                }
+
+                @if (currentStep === totalSteps) {
+                  <button type="submit" [disabled]="isSubmitting || !hasChanges()"
+                          class="px-8 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg 
+                                 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl 
+                                 transition-all duration-200 disabled:opacity-50 flex items-center gap-2">
+                    @if (isSubmitting) {
+                      <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                      </svg>
+                      <span>Updating...</span>
+                    } @else {
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      <span>Update Product</span>
+                    }
+                  </button>
+                }
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    
+
+    <!-- Quick Info Card -->
+    @if (!loading) {
+      <div class="mt-6 bg-blue-50 rounded-xl p-4 border border-blue-200">
+        <div class="flex items-center gap-3 text-blue-800">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div class="text-sm">
+            <span class="font-medium">Editing Product:</span> 
+            <span class="font-mono">{{ productId }}</span> | 
+            <span class="font-medium">Name:</span> 
+            {{ productForm.get('productName')?.value || 'Not set' }} |
+            <span class="font-medium">Changes:</span> 
+            <span class="font-semibold">{{ "hello" }}</span> field(s) modified
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

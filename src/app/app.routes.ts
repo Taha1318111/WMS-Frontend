@@ -30,7 +30,13 @@ export const routes: Routes = [
         path: 'Createproduct',
         loadComponent: () => 
           import('./Modules/Product/create-product/create-product').then(m => m.CreateProduct)
+      },
+      {
+        path: 'edit-product/:id',
+        loadComponent: () => 
+          import('./Modules/Product/update-product/update-product').then(m => m.UpdateProduct)
       }
+     
     ]
   },
   { 

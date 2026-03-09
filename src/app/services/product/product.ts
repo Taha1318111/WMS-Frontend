@@ -21,10 +21,14 @@ export class ProductService {
   }
 
   updateProduct(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, data);
+    return this.http.put(`${this.baseUrl}/UpdateProduct/${id}`, data);
   }
-
+ 
   deleteProduct(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  getProductById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/GetProduct/${id}`);
   }
 }
